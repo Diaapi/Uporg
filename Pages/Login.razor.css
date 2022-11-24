@@ -1,0 +1,95 @@
+﻿.background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: rgba(0,0,0,.1);
+    background-blend-mode: soft-light;
+    height: 100vh;
+    overflow:hidden;
+}
+
+.center-login {
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.center-buttons{
+    margin-top:1rem;
+    display:flex;
+    justify-content:center;
+}
+.login {
+    display: inline;
+    width: 50%;
+    background-color: rgba(255,255,255,.2);
+    backdrop-filter: blur(20px);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+    .login h5 {
+        color: white;
+        font-weight:bold;
+    }
+
+    .login input {
+        padding: 10px;
+        background-color: rgba(255,255,255,.5);
+        backdrop-filter:blur(20px);
+        outline: none;
+        border: none;
+        color: black;
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    .login input::placeholder{
+        color:#151515;
+    }
+
+        .login input:focus {
+            transition: all ease .5s;
+            background-color: white;
+        }
+
+    .login button {
+        padding: 7px;
+        background-color: #014f86;
+        color: white;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    }
+
+        .login button:hover {
+            transition: all ease .5s;
+            background-color: #013a63;
+        }
+
+    .login a {
+        padding: 7px;
+        background-color: #008000;
+        color: white;
+        border: none;
+        margin-left: 5px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+        .login a:hover {
+            transition: all ease .5s;
+            background-color: #006400;
+        }
+
+@media screen and (max-width: 600px) {
+
+    .login{
+        width:100%;
+        margin: 0 10px;
+    }
+}

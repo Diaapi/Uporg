@@ -1,0 +1,9 @@
+﻿@using Blazored.Toast.Configuration;
+@inherits LayoutComponentBase
+
+<div class="w-100 vh-100 overflow-hidden">
+    @Body
+</div>
+<BlazoredToasts Position="ToastPosition.BottomCenter"
+                Timeout="10"
+                IconType="IconType.FontAwesome" />

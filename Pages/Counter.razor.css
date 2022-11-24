@@ -1,0 +1,40 @@
+﻿img{
+    width:32px;
+    height:32px;
+    border-radius:5px;
+}
+
+input {
+    padding: 15px;
+    background-color: #bcbcbc;
+    outline: none;
+    border: none;
+    color: white;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+input::placeholder {
+    color: #eee;
+}
+
+input:focus {
+    transition: all ease .5s;
+    background-color: #353535;
+
+}
+
+button {
+    padding: 7px;
+    background-color: #014f86;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    transition: all ease .5s;
+    background-color: #013a63;
+}

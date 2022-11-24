@@ -1,0 +1,16 @@
+﻿.background{
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    background-color:rgba(0,0,0,.3);
+    background-blend-mode:soft-light;
+    height:100vh;
+}
+
+@media screen and (max-width:60px){
+    h1{
+        display:flex;
+        text-align:center;
+    }
+}

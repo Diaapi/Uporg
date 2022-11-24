@@ -1,0 +1,43 @@
+﻿@page "/"
+@layout EmptyLayout
+@inject ILocalStorageService local
+@inject IToastService toast
+@inject NavigationManager nav
+<PageTitle>Iniciar Sesion</PageTitle>
+<div class="background" style="background-image:url(@back)">
+    <div class="center-login">
+        <div class="login">
+            <h5 class="text-center mb-2">Iniciar sesion</h5>
+            <input placeholder="Correo electronico" @bind="mail" />
+            <input placeholder="Clave" type="password" @bind="pass" />
+            <div class="center-buttons">
+                <button @onclick="login">Iniciar Sesion</button>
+                <a href="/register">Registrarse</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    string apiweb = "AIzaSyAM9gbk4TVOvGoZb6aG2288kSBC_1o-0Ss";
+    string? mail, pass;
+    string? back = "https://cdn.pixabay.com/photo/2022/11/13/20/29/town-7590138_960_720.jpg";
+
+    private async void login()
+    {
+        var authprovider = new FirebaseAuthProvider(new FirebaseConfig(apiweb));
+        try
+        {
+            var auth = await authprovider.SignInWithEmailAndPasswordAsync(mail, pass);
+            var content = await auth.GetFreshAuthAsync();
+            var serialized = JsonConvert.SerializeObject(content);
+            await local.SetItemAsync("refreshtoken", serialized);
+            nav.NavigateTo("home");
+            back = await local.GetItemAsync<string>("background");
+        }
+        catch(Exception)
+        {
+            toast.ShowError("Disculpe necesita rellenar los datos requeridos", "Error");
+        }
+    }
+}

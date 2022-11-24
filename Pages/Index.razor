@@ -1,0 +1,83 @@
+﻿@page "/home"
+@inject IAppServices services
+@inject ILocalStorageService local
+@inject IJSRuntime js
+<PageTitle>Inicio</PageTitle>
+<div class="background" style="background-image:url(@back)">
+    <div class="d-inline">
+        <h1 class="text-center d-lg-none text-white pt-2">@DateTime.Now.ToString("dd/MM/yyyy h:mm tt")</h1>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex my-2 w-50 bg-white p-1 rounded">
+                <button class="btn btn-outline-dark border-0 shadow-none" @onclick="search"><i class="oi oi-magnifying-glass"></i></button>
+                <input class="form-control border-0 shadow-none ms-1" @bind="searchtext" placeholder="Buscar..." />
+            </div>
+        </div>
+        <div class="d-flex flex-wrap">
+            @foreach (var item in apps)
+            {
+                <MudMenu PositionAtCursor="true">
+                    <ActivatorContent>
+                        <div class="d-flex flex-column m-2">
+                            <div class="p-2 mx-auto bg-white rounded-3">
+                                <img src="@item.Image" class="mx-auto" width="32" height="32" />
+                            </div>
+                            <p class="text-white mt-1">@item.Name</p>
+                        </div>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem Href="@item.Url" Target="_blank" Icon="@Icons.Material.Filled.OpenInBrowser">Abrir</MudMenuItem>
+                        <MudMenuItem OnClick="@(()=>share(item.Url!))" Icon="@Icons.Material.Filled.Share">Compartir</MudMenuItem>
+                        <MudMenuItem OnClick="@(()=>clip(item.Url!))" Icon="@Icons.Material.Filled.ContentPaste">Porta Papeles</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.Delete" IconColor="Color.Error" Style="color:red;" OnClick="@(()=>delete(item.Id))">Eliminar</MudMenuItem>
+                    </ChildContent>
+                </MudMenu>
+            }
+        </div>
+    </div>
+</div>
+@code{
+    string? back = "https://cdn.pixabay.com/photo/2022/11/13/20/29/town-7590138_960_720.jpg";
+    private List<AppModel> apps = new List<AppModel>();
+    string searchtext = "";
+    string apiweb = "AIzaSyAM9gbk4TVOvGoZb6aG2288kSBC_1o-0Ss";
+    protected override async Task OnInitializedAsync()
+    {
+        var authprovider = new FirebaseAuthProvider(new FirebaseConfig(apiweb));
+        var saved = JsonConvert.DeserializeObject<FirebaseAuth>(await local.GetItemAsync<string>("refreshtoken"));
+        var refresh = await authprovider.RefreshAuthAsync(saved);
+        await local.SetItemAsync("firebasetoken", JsonConvert.SerializeObject(refresh));
+        back = await local.GetItemAsync<string>("background");
+        apps = await services.GetApps(saved!.User.DisplayName);
+        StateHasChanged();
+    }
+
+    private async void delete(int id)
+    {
+        await services.DeleteApps(id);
+        await OnInitializedAsync();
+        StateHasChanged();
+    }
+
+    private async void share(string url)
+    {
+        await js.InvokeVoidAsync("Sharing",url);
+    }
+
+    private async void clip(string url)
+    {
+        await js.InvokeVoidAsync("clip",url);
+    }
+
+    async Task search()
+    {
+        if (string.IsNullOrEmpty(searchtext))
+        {
+            await OnInitializedAsync();
+        }
+        else
+        {
+            apps = await services.Search(searchtext);
+            StateHasChanged();
+        }
+    }
+}

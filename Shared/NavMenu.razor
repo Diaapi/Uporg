@@ -1,0 +1,34 @@
+﻿@using Uporg.Pages;
+@inject IDialogService dialog
+<div class="tabbar">
+    <div class="nav-menu">
+        <a href="/home" title="Inicio">
+            <MudIcon Icon="@Icons.Material.Filled.Home" Class="icon"></MudIcon>
+            <span>Inicio</span>
+        </a>
+        <a href="/add" title="Agregar">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="icon"></MudIcon>
+            <span>Agregar</span>
+        </a>
+        <a href="/fetchdata" title="Ajustes">
+            <MudIcon Icon="@Icons.Material.Filled.Settings" Class="icon"></MudIcon>
+            <span>Ajustes</span>
+        </a>
+    </div>
+    <div class="nav-notify">
+        <p>@DateTime.Now.ToString("dd/MM/yyyy h:mm tt")</p>
+        <button @onclick="ShowNews" title="Noticias">
+            <MudIcon Icon="@Icons.Material.Filled.Newspaper" Class="icon"></MudIcon>
+            <span>Noticias</span>
+        </button>
+    </div>
+</div>
+
+@code{
+    [CascadingParameter] public IModalService? modal{ get; set; }
+
+    private void ShowNews()
+    {
+        modal!.Show<News>("Noticias");
+    }
+}

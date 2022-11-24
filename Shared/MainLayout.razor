@@ -1,0 +1,12 @@
+﻿@using Blazored.Toast.Configuration;
+@inherits LayoutComponentBase
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+<div class="w-100 overflow-hidden">
+    <NavMenu />
+    @Body
+</div>
+<BlazoredToasts Position="ToastPosition.TopCenter"
+                Timeout="10"
+                IconType="IconType.FontAwesome" />

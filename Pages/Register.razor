@@ -1,0 +1,39 @@
+﻿@page "/register"
+@layout EmptyLayout
+@inject ILocalStorageService local
+@inject NavigationManager nav
+@inject IToastService toast
+<PageTitle>Registrarse</PageTitle>
+<div class="background" style="background-image:url(@back)">
+    <div class="w-100 vh-100 d-flex justify-content-center align-items-center">
+        <div class="register">
+            <h5 class="text-center mb-2">Registrarse</h5>
+            <input placeholder="Usuario" @bind="user" />
+            <input placeholder="Correo electronico" @bind="mail" />
+            <input placeholder="Clave" type="password" @bind="pass" />
+            <div class="w-100 d-flex justify-content-center">
+                <a href="/">Regresar</a>
+                <button @onclick="register">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    string apiweb = "AIzaSyAM9gbk4TVOvGoZb6aG2288kSBC_1o-0Ss";
+    string? mail, pass, user;
+    string? back = "https://cdn.pixabay.com/photo/2022/11/13/20/29/town-7590138_960_720.jpg";
+    private async void register()
+    {
+        try{
+            var authprovider = new FirebaseAuthProvider(new FirebaseConfig(apiweb));
+            var auth = await authprovider.CreateUserWithEmailAndPasswordAsync(mail, pass, user);
+            nav.NavigateTo("");
+            back = await local.GetItemAsync<string>("background");
+        }
+        catch (Exception)
+        {
+            toast.ShowError("Disculpe necesita rellenar los datos requeridos", "Error");
+        }
+    }
+}

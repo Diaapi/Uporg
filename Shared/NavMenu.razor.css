@@ -1,0 +1,95 @@
+.tabbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 55px;
+    background-color: rgba(0,0,0,.3);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+}
+.nav-menu{
+    display:flex;
+}
+
+span{
+    display:none;
+}
+
+.nav-notify{
+    display:flex;
+    margin:0 5px;
+}
+
+@media screen and (max-width:600px){
+    .nav-menu{
+        display:flex;
+        flex-grow:1;
+        justify-content:center;
+    }
+
+    button{
+        flex-grow:1;
+    }
+
+    a {
+        flex-grow: 1;
+    }
+
+    span{
+        display:flex;
+    }
+
+    .nav-notify p{
+        display:none;
+    }
+}
+
+button{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:50px;
+    margin:0 10px;
+    overflow:hidden;
+    white-space:text;
+    font-size:13px;
+    text-decoration:none;
+    color:white;
+}
+
+    button:hover {
+        transition: all ease .15s;
+        color: #b4b4b4;
+    }
+
+a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    margin: 0 10px;
+    overflow: hidden;
+    white-space: text;
+    font-size: 13px;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover{
+    transition:all ease .15s;
+    color:#b4b4b4;
+}
+
+p{
+    display:flex;
+    margin:auto 10px;
+    color:white;
+}
+
+.icon{
+    margin-bottom:5px;
+}
